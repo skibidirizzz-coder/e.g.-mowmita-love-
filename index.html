@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mowmita Love</title>
+    <style>                
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        #question {
+            text-align: center;
+            font-size: 24px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #congratulations {
+            display: none;
+            font-size: 36px;
+            text-align: center;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { color: red; }
+            50% { color: yellow; }
+            100% { color: green; }
+        }
+        .emoji {
+            position: absolute;
+            font-size: 24px;
+            animation: float 3s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        video {
+            display: none;
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="question">
+        <p>Mowmita, do you love me?</p>
+        <button id="yesButton">Yes</button>
+        <button id="noButton" onmouseover="moveButton()">No</button>
+    </div>
+    <div id="congratulations">
+        <p>Congratulations, you chose the best!</p>
+        <span class="emoji">❤️</span>
+    </div>
+    <video id="video" src="ramin.mp4" controls></video>
+    
+    <script>
+        function moveButton() {
+            const noButton = document.getElementById('noButton');
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.position = 'absolute';
+            noButton.style.left = x + 'px';
+            noButton.style.top = y + 'px';
+        }
+
+        document.getElementById('yesButton').onclick = function() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('congratulations').style.display = 'block';
+            const emoji = document.querySelector('.emoji');
+            emoji.style.left = Math.random() * window.innerWidth + 'px';
+            emoji.style.top = Math.random() * window.innerHeight + 'px';
+
+            setTimeout(() => {
+                document.getElementById('congratulations').style.display = 'none';
+                const video = document.getElementById('video');
+                video.style.display = 'block';
+                video.play().catch(error => {
+                    console.log('Autoplay prevented. Video will play manually:', error);
+                });
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
